@@ -28,9 +28,16 @@ namespace lugerovac_zadaca_2
                     elements.CheckIDs();
                     elements.Validate();
                     break;
+                case 6:
+                    ChainRequest request6 = new ChainRequest(RequestType.PrintErronousData, null);
+                    Elements.GetInstance().FirstObject.HandleRequest(request6);
+                    break;
                 case 7:
-                    ChainRequest request7 = new ChainRequest(RequestType.PrintErronousData, null);
-                    Elements.GetInstance().FirstObject.HandleRequest(request7);
+                    Elements.GetInstance().SaveMemento();
+                    break;
+                case 8:
+                    if(Elements.GetInstance().MementoExists)
+                        Elements.GetInstance().RestoreMemento();
                     break;
             }
             ShowUserControls();
@@ -71,8 +78,9 @@ namespace lugerovac_zadaca_2
             Console.WriteLine("3 - promjena statusa elementa");
             //Console.WriteLine("4 - ukupne površine boja");
             Console.WriteLine("5 - učitavanje dodatne datoteke");
-            //Console.WriteLine("6 - Poništi učitanu datoteku");
-            Console.WriteLine("7 - ispis neispravnih stavki");
+            Console.WriteLine("6 - ispis neispravnih stavki");
+            Console.WriteLine("7 - stvori memento podataka");
+            if(Elements.GetInstance().MementoExists) Console.WriteLine("8 - iskoristi memento da se obnove spremljeni podaci");
             Console.WriteLine("0 - izlaz iz programa");
 
             Console.Write("Vaš odabir: ");

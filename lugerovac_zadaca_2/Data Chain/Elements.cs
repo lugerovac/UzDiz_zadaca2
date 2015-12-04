@@ -15,18 +15,28 @@ namespace lugerovac_zadaca_2
         {
             get { return _foundRootElement; }
         }
+        private bool _mementoFoundRootElement = false;
 
         private int _rootElement;
         public int RootElement
         {
             get { return _rootElement; }
         }
+        private int _mementoRootElement;
 
         private ObjectHandler _firstObject = new ObjectHandler();
         public ObjectHandler FirstObject
         {
             get { return _firstObject; }
         }
+
+        private bool _mementoExists = false;
+        public bool MementoExists
+        {
+            get { return _mementoExists; }
+        }
+
+        private ObjectHandler _mementoObject;
 
         protected Elements()
         {
@@ -70,6 +80,29 @@ namespace lugerovac_zadaca_2
                 Console.WriteLine(rootID.GetValueOrDefault().ToString());
                 return true;
             }
+        }
+
+        public void SaveMemento()
+        {
+            ObjectHandler newFirstObject = new ObjectHandler();
+            ChainRequest request = new ChainRequest(RequestType.AddToMemento, newFirstObject);
+            FirstObject.HandleRequest(request);
+            _mementoObject = newFirstObject;
+            _mementoFoundRootElement = FoundRootElement;
+            _mementoRootElement = RootElement;
+            _mementoExists = true;
+
+            Console.WriteLine("\nMemento je stvoren!");
+        }
+
+        public void RestoreMemento()
+        {
+            _firstObject = _mementoObject;
+            _foundRootElement = _mementoFoundRootElement;
+            _rootElement = _mementoRootElement;
+            _mementoExists = false;
+
+            Console.WriteLine("\nMemento je iskorišten!");
         }
     }
 }

@@ -4,6 +4,7 @@
     {
         AddIdToListAndCheck,
         AddRecord,
+        AddToMemento,
         AreYouMydaddy,
         ChangeState,
         FindRoot,

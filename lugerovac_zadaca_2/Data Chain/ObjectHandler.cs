@@ -181,6 +181,32 @@ namespace lugerovac_zadaca_2
                         successor.HandleRequest(request);
                     return null;
                 #endregion
+
+                #region Add To Memento
+                case RequestType.AddToMemento:
+                    FileData mementoDataObject = new FileData();
+                    mementoDataObject.ID = dataObject.ID;
+                    mementoDataObject.RecordType = dataObject.RecordType;
+                    mementoDataObject.ParentID = dataObject.ParentID;
+                    mementoDataObject.Coordinates = dataObject.Coordinates;
+                    mementoDataObject.Color = dataObject.Color;
+
+                    ObjectHandler mementoObject = (ObjectHandler)request.parameters;
+                    mementoObject.dataObject = mementoDataObject;
+                    mementoObject.isErronous = isErronous;
+                    mementoObject.isHidden = isHidden;
+                    mementoObject.isRootElement = isRootElement;
+                    mementoObject.errorReport = errorReport;
+
+                    if(this.successor != null)
+                    {
+                        ObjectHandler mementoSuccessor = new ObjectHandler();
+                        mementoObject.successor = mementoSuccessor;
+                        ChainRequest newRequest = new ChainRequest(RequestType.AddToMemento, mementoSuccessor);
+                        this.successor.HandleRequest(newRequest);
+                    }
+                    return null;
+                #endregion
             }
             return null;
         }

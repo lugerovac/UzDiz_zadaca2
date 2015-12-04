@@ -18,7 +18,7 @@ namespace lugerovac_zadaca_2
                 return;
             }
 
-            if(!MainFacade.TransformData())
+            if(!MainFacade.HandleData())
             {
                 Console.WriteLine("Zbog nastalih problema, program se prekida!");
                 return;

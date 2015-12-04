@@ -27,10 +27,12 @@ namespace lugerovac_zadaca_2
             return true;
         }
 
-        public static bool TransformData()
+        public static bool HandleData()
         {
+            Elements.GetInstance().CheckIDs();
+
             Elements.GetInstance().FindRootElement();
-            if(!Elements.GetInstance().FoundRootElement)
+            if (!Elements.GetInstance().FoundRootElement)
             {
                 Console.WriteLine("Ne postoji izvorišni element!");
                 return false;

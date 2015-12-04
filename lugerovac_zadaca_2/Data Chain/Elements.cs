@@ -40,6 +40,15 @@ namespace lugerovac_zadaca_2
             return _instance;
         }
 
+        public bool CheckIDs()
+        {
+            List<int> IdList = new List<int>();
+            ChainRequest request = new ChainRequest(RequestType.AddIdToListAndCheck, IdList);
+            _firstObject.HandleRequest(request);
+            Console.WriteLine(IdList.Count.ToString());
+            return true;
+        }
+
         public bool FindRootElement()
         {
             if (_firstObject == null)
@@ -54,8 +63,6 @@ namespace lugerovac_zadaca_2
                 _rootElement = rootID.GetValueOrDefault();
                 return true;
             }
-
-            return false;
         }
     }
 }

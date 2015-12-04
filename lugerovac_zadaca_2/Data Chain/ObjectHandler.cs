@@ -10,6 +10,8 @@ namespace lugerovac_zadaca_2
     {
         protected FileData dataObject;
         protected bool isRootElement = false;
+        protected bool isErronous = false;
+        protected string errorReport = "Nema pogreški";
 
         public override object HandleRequest(ChainRequest request)
         {
@@ -57,12 +59,27 @@ namespace lugerovac_zadaca_2
                         successor.HandleRequest(request);
                     return null;
 
+                case RequestType.AddIdToListAndCheck:
+                    List<int> IdList = (List<int>)request.parameters;
+                    if(IdList.Contains(dataObject.ID))
+                    {
+                        isErronous = true;
+                        errorReport = "Već postoji element s ovom šifrom";
+                    }else
+                    {
+                        IdList.Add(dataObject.ID);
+                    }
+
+                    if (successor != null)
+                        successor.HandleRequest(request);
+                    return null;
+
                 case RequestType.FindRoot:
-                    if (dataObject == null)
+                    if (dataObject == null && !isErronous)
                         return null;
-                    else if (isRootElement)
+                    else if (isRootElement && !isErronous)
                         return dataObject.ID;
-                    else if (dataObject.ID == dataObject.ParentID)
+                    else if (dataObject.ID == dataObject.ParentID && !isErronous)
                     {
                         isRootElement = true;
                         return dataObject.ID;

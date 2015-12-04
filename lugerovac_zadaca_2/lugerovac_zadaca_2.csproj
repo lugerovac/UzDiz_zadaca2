@@ -52,6 +52,7 @@
     <Compile Include="Data Chain\ObjectHandler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserControl.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

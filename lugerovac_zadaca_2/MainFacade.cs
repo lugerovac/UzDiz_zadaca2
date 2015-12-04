@@ -31,14 +31,26 @@ namespace lugerovac_zadaca_2
         {
             Elements elements = Elements.GetInstance();
             elements.CheckIDs();
-            elements.Validate();
             elements.FindRootElement();
+            elements.Validate();
             if (!elements.FoundRootElement)
             {
                 Console.WriteLine("Ne postoji izvorišni element!");
                 return false;
             }
+            PrintErronousData();
             return true;
+        }
+
+        static void PrintErronousData()
+        {
+            ChainRequest request = new ChainRequest(RequestType.PrintErronousData, null);
+            Elements.GetInstance().FirstObject.HandleRequest(request);
+        }
+
+        public static void UserControler()
+        {
+            UserControl.ShowUserControls();
         }
     }
 }

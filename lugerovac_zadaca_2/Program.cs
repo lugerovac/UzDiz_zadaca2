@@ -23,6 +23,8 @@ namespace lugerovac_zadaca_2
                 Console.WriteLine("Zbog nastalih problema, program se prekida!");
                 return;
             }
+
+            MainFacade.UserControler();
         }
     }
 }

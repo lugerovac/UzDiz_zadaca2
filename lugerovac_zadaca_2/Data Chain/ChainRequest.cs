@@ -2,13 +2,15 @@
 {
     public enum RequestType
     {
-        SaveData,
-        AddRecord,
-        PrintAllData,
         AddIdToListAndCheck,
-        ValidationCheck,
+        AddRecord,
+        AreYouMydaddy,
+        ChangeState,
         FindRoot,
-        AreYouMydaddy
+        PrintAllData,
+        PrintErronousData,
+        SaveData,
+        ValidationCheck
     }
 
     public class ChainRequest

@@ -45,7 +45,6 @@ namespace lugerovac_zadaca_2
             List<int> IdList = new List<int>();
             ChainRequest request = new ChainRequest(RequestType.AddIdToListAndCheck, IdList);
             _firstObject.HandleRequest(request);
-            Console.WriteLine(IdList.Count.ToString());
             return true;
         }
 
@@ -68,6 +67,7 @@ namespace lugerovac_zadaca_2
             {
                 _foundRootElement = true;
                 _rootElement = rootID.GetValueOrDefault();
+                Console.WriteLine(rootID.GetValueOrDefault().ToString());
                 return true;
             }
         }

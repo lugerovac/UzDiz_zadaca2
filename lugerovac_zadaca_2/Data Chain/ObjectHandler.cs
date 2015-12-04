@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace lugerovac_zadaca_2
 {
+    /// <summary>
+    /// Elemnti lanca ogovornosti
+    /// </summary>
     public class ObjectHandler : ChainHandler
     {
         protected FileData dataObject;
@@ -14,16 +17,23 @@ namespace lugerovac_zadaca_2
         protected bool isErronous = false;
         protected string errorReport = "";
 
+        /// <summary>
+        /// Funkcija koja izvršava zadan zahtjeve
+        /// </summary>
+        /// <param name="request">Zahtjev klase ChainRequest</param>
+        /// <returns>Vraće objekt ako je potrebno, inače null. Pozivatelj će primiti i castati objekt ako je potrebno</returns>
         public override object HandleRequest(ChainRequest request)
         {
             switch (request.requestType)
             {
+                //Sprema podatke o objektu strukture
                 #region Save Data
                 case RequestType.SaveData:
                     dataObject = (FileData)request.parameters;
                     return null;
                 #endregion
 
+                //Dodaje novi objekt u lanac
                 #region Add Record
                 case RequestType.AddRecord:
                     if(dataObject == null)
@@ -43,6 +53,7 @@ namespace lugerovac_zadaca_2
                     return null;
                 #endregion
 
+                //Ispisuje sve ispravne podatke o objektu lanca
                 #region Print All Data
                 case RequestType.PrintAllData:
                     if (!isErronous && !isHidden)
@@ -53,6 +64,7 @@ namespace lugerovac_zadaca_2
                     return null;
                 #endregion
 
+                //Ispisuje sve neispravne podatke o objektu lanca
                 #region Print Erronous Data
                 case RequestType.PrintErronousData:
                     if(isErronous)
@@ -66,6 +78,7 @@ namespace lugerovac_zadaca_2
                     return null;
                 #endregion
 
+                //Dodaje Id u listu zadanu parametrom kako bi se detektirali elementi s ponavljajućim šiframa
                 #region Add ID to the list and check it
                 case RequestType.AddIdToListAndCheck:
                     List<int> IdList = (List<int>)request.parameters;
@@ -83,6 +96,7 @@ namespace lugerovac_zadaca_2
                     return null;
                 #endregion
 
+                //Provjerava ispravnost svojih podataka
                 #region Validation Check
                 case RequestType.ValidationCheck:
                     if(dataObject.RecordType == 0 && dataObject.Coordinates.Count != 4 && !isErronous)
@@ -137,6 +151,7 @@ namespace lugerovac_zadaca_2
                     return null;
                 #endregion
 
+                //Provjerava ispravnost proglašenog roditelja
                 #region Check if Parent exists
                 case RequestType.AreYouMydaddy:
                     if ((int)request.parameters == dataObject.ID)
@@ -152,6 +167,7 @@ namespace lugerovac_zadaca_2
                         return false;
                 #endregion
 
+                //Prolazi kroz lanac dok ne nađe izvorišni element i vraće pozivatelju njegovu šifru
                 #region Find the root element
                 case RequestType.FindRoot:
                     if (dataObject.RecordType == 0 && !isErronous)
@@ -172,7 +188,8 @@ namespace lugerovac_zadaca_2
 
                     return null;
                 #endregion
-
+                
+                //Mjenja status objekta u skriveno ili aktivno
                 #region Change State
                 case RequestType.ChangeState:
                     if ((int)request.parameters == dataObject.ID && !isErronous)
@@ -182,6 +199,7 @@ namespace lugerovac_zadaca_2
                     return null;
                 #endregion
 
+                //Dodaje podatke u memento, točnije stvara vlastitu kopiju i dodaje ju u novi lanac
                 #region Add To Memento
                 case RequestType.AddToMemento:
                     FileData mementoDataObject = new FileData();
@@ -211,6 +229,9 @@ namespace lugerovac_zadaca_2
             return null;
         }
 
+        /// <summary>
+        /// Ispisuje podatke o elementu lanca
+        /// </summary>
         void PrintMyData()
         {
             string coordinatesAsString = "";

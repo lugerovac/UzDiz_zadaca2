@@ -6,10 +6,16 @@ using System.Threading.Tasks;
 
 namespace lugerovac_zadaca_2
 {
+    /// <summary>
+    /// Rekurzivna statička klasa koja obrađuje zahtjeve koje korisnik zadaje putem korisničkog sučelja
+    /// </summary>
     public static class UserControl
     {
         static ChainMemory storedMemento;
 
+        /// <summary>
+        /// Prikazuje i obrađuje korisničke funkcije
+        /// </summary>
         public static void ShowUserControls()
         {
             int userInput = GetUserInput();
@@ -37,15 +43,22 @@ namespace lugerovac_zadaca_2
                 case 7:
                     storedMemento = new ChainMemory();
                     storedMemento.Memento = Elements.GetInstance().SaveMemento();
+                    Console.WriteLine("\nStvoren je memento podataka!");
                     break;
                 case 8:
-                    if(Elements.GetInstance().MementoExists)
+                    if (Elements.GetInstance().MementoExists)
+                    {
                         Elements.GetInstance().RestoreMemento(storedMemento.Memento);
+                        Console.WriteLine("\nMemento je iskorišten!");
+                    }
                     break;
             }
             ShowUserControls();
         }
 
+        /// <summary>
+        /// Učitava dodatnu datoteku
+        /// </summary>
         static void ReadAnotherFile()
         {
             Console.Write("Unesite putanju do dodatne datoteke: ");
@@ -56,6 +69,9 @@ namespace lugerovac_zadaca_2
                 Console.WriteLine("Datoteka je uspješno učitana!!");
         }
 
+        /// <summary>
+        /// Mjenja stanje aktivnosti nekog geometrijskog elementa
+        /// </summary>
         static void ChangeState()
         {
             Console.WriteLine("Kojem objektu želite promjeniti stanje aktivnosti?");
@@ -73,6 +89,10 @@ namespace lugerovac_zadaca_2
         }
 
 
+        /// <summary>
+        /// Nudi korisniku moguče zahtjeve i čita ih
+        /// </summary>
+        /// <returns></returns>
         static int GetUserInput()
         {
             Console.WriteLine("----------------------------------");

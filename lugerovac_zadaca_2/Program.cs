@@ -1,13 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace lugerovac_zadaca_2
 {
     class Program
     {
+        /// <summary>
+        /// Početna funkcija
+        /// </summary>
+        /// <param name="args">Argumenti zadani u cmd-u</param>
         static void Main(string[] args)
         {
             Console.OutputEncoding = Encoding.Unicode;

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace lugerovac_zadaca_2
 {
+    /// <summary>
+    /// Ova klasa sadrži sve podatke o geometrijskim elemntima učitane iz datoteka
+    /// </summary>
     public class FileData
     {
         int _recordType;

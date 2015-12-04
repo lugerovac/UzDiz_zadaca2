@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace lugerovac_zadaca_2
 {
+    /// <summary>
+    /// Singleton klasa koja sprema strukturu elemenata
+    /// </summary>
     public class Elements
     {
         private static Elements _instance;
@@ -46,14 +49,20 @@ namespace lugerovac_zadaca_2
             return _instance;
         }
 
-        public bool CheckIDs()
+        /// <summary>
+        /// Šalje zahtjev elementima lanca da provjere jedinstvenost svojih šifara
+        /// </summary>
+        public void CheckIDs()
         {
             List<int> IdList = new List<int>();
             ChainRequest request = new ChainRequest(RequestType.AddIdToListAndCheck, IdList);
             _firstObject.HandleRequest(request);
-            return true;
         }
 
+        /// <summary>
+        /// Šalje zahtjev elementima lanca da provjere svoje ispravnosti
+        /// </summary>
+        /// <returns></returns>
         public bool Validate()
         {
             ChainRequest request = new ChainRequest(RequestType.ValidationCheck, null);
@@ -61,6 +70,10 @@ namespace lugerovac_zadaca_2
             return true;
         }
 
+        /// <summary>
+        /// Funkcija šalje zahtjev lancu da joj pronađe ispravni, izvorišni element
+        /// </summary>
+        /// <returns>True ako takav element postoji, inače False</returns>
         public bool FindRootElement()
         {
             if (_firstObject == null)
@@ -78,6 +91,10 @@ namespace lugerovac_zadaca_2
             }
         }
 
+        /// <summary>
+        /// Sprema trenutnu strukturu u memento
+        /// </summary>
+        /// <returns>Trenutna struktura spremljena u objektu klase Memento</returns>
         public Memento SaveMemento()
         {
             ObjectHandler newFirstObject = new ObjectHandler();
@@ -87,14 +104,16 @@ namespace lugerovac_zadaca_2
             return new Memento(newFirstObject, FoundRootElement, RootElement);
         }
 
+        /// <summary>
+        /// Koristi Memento da zamjeni trenutnu strukturu starijom
+        /// </summary>
+        /// <param name="memento">Objekt koji sadrži sve podatke o taroj strukturi</param>
         public void RestoreMemento(Memento memento)
         {
             _firstObject = memento.firstObject;
             _foundRootElement = memento.foundRootElement;
             _rootElement = memento.rootElement;
             _mementoExists = false;
-
-            Console.WriteLine("\nMemento je iskorišten!");
         }
     }
 }

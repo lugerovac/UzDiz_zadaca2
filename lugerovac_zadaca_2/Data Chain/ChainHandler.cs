@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace lugerovac_zadaca_2
 {
+    /// <summary>
+    /// Sučelje za uzorak Chain of Responsibility
+    /// </summary>
     public abstract class ChainHandler
     {
         protected ChainHandler successor;

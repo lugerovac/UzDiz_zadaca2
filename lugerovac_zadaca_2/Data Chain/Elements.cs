@@ -49,6 +49,13 @@ namespace lugerovac_zadaca_2
             return true;
         }
 
+        public bool Validate()
+        {
+            ChainRequest request = new ChainRequest(RequestType.ValidationCheck, null);
+            _firstObject.HandleRequest(request);
+            return true;
+        }
+
         public bool FindRootElement()
         {
             if (_firstObject == null)

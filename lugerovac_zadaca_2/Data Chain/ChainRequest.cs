@@ -6,7 +6,9 @@
         AddRecord,
         PrintAllData,
         AddIdToListAndCheck,
-        FindRoot
+        ValidationCheck,
+        FindRoot,
+        AreYouMydaddy
     }
 
     public class ChainRequest

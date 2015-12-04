@@ -11,7 +11,7 @@ namespace lugerovac_zadaca_2
         protected FileData dataObject;
         protected bool isRootElement = false;
         protected bool isErronous = false;
-        protected string errorReport = "Nema pogreški";
+        protected string errorReport = "";
 
         public override object HandleRequest(ChainRequest request)
         {
@@ -64,7 +64,7 @@ namespace lugerovac_zadaca_2
                     if(IdList.Contains(dataObject.ID))
                     {
                         isErronous = true;
-                        errorReport = "Već postoji element s ovom šifrom";
+                        errorReport += "Već postoji element s ovom šifrom\n";
                     }else
                     {
                         IdList.Add(dataObject.ID);
@@ -74,17 +74,67 @@ namespace lugerovac_zadaca_2
                         successor.HandleRequest(request);
                     return null;
 
-                case RequestType.FindRoot:
-                    if (dataObject == null && !isErronous)
-                        return null;
-                    else if (isRootElement && !isErronous)
-                        return dataObject.ID;
-                    else if (dataObject.ID == dataObject.ParentID && !isErronous)
+                case RequestType.ValidationCheck:
+                    if(dataObject.RecordType == 0 && dataObject.Coordinates.Count != 4 && !isErronous)
                     {
-                        isRootElement = true;
-                        return dataObject.ID;
+                        isErronous = true;
+                        errorReport += "Složeni element nije pravokutnik\n";
+                        return null;
+                    }
+
+                    if (dataObject.RecordType == 1 && !isErronous)
+                    {
+                        ChainRequest newReqeust = new ChainRequest(RequestType.AreYouMydaddy, dataObject.ParentID);
+                        if ((bool)Elements.GetInstance().FirstObject.HandleRequest(newReqeust))  //I go look for daddy :)
+                        {
+                            //I found my daddy :D
+                        }
+                        else
+                        {
+                            //No, he is not my real daddy or I don't actually have a daddy :(
+                            isErronous = true;  //I am illegitimate :'(
+                            errorReport += "Roditelj nije složeni element ili roditelj ne postoji\n";
+                            return null;
+                        }
+
+                        if(dataObject.Coordinates.Count < 3 || dataObject.Coordinates.Count > 14
+                            || (dataObject.Coordinates.Count % 2 != 0))
+                        {
+                            isErronous = true;
+                            errorReport += "Broj koordinata je manji od 3 ILI veći od 14 ILI je neparan a nije jednak 3\n";
+                            return null;
+                        }
+                    }
+                    return null;
+
+                case RequestType.AreYouMydaddy:
+                    if ((int)request.parameters == dataObject.ID)
+                    {
+                        if (dataObject.RecordType == 0)
+                            return true;
+                        else
+                            return false;
                     }
                     else if (this.successor != null)
+                        return successor.HandleRequest(request);
+                    else
+                        return false;
+
+                case RequestType.FindRoot:
+                    if (dataObject.RecordType == 0 && !isErronous)
+                    {
+                        if (dataObject == null)
+                            return null;
+                        else if (isRootElement)
+                            return dataObject.ID;
+                        else if (dataObject.ID == dataObject.ParentID)
+                        {
+                            isRootElement = true;
+                            return dataObject.ID;
+                        }
+                    }
+
+                    if (this.successor != null)
                         return successor.HandleRequest(request);
 
                     return null;

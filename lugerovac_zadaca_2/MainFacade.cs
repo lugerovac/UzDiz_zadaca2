@@ -29,10 +29,11 @@ namespace lugerovac_zadaca_2
 
         public static bool HandleData()
         {
-            Elements.GetInstance().CheckIDs();
-
-            Elements.GetInstance().FindRootElement();
-            if (!Elements.GetInstance().FoundRootElement)
+            Elements elements = Elements.GetInstance();
+            elements.CheckIDs();
+            elements.Validate();
+            elements.FindRootElement();
+            if (!elements.FoundRootElement)
             {
                 Console.WriteLine("Ne postoji izvorišni element!");
                 return false;

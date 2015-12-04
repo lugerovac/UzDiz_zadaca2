@@ -8,6 +8,8 @@ namespace lugerovac_zadaca_2
 {
     public static class UserControl
     {
+        static ChainMemory storedMemento;
+
         public static void ShowUserControls()
         {
             int userInput = GetUserInput();
@@ -33,11 +35,12 @@ namespace lugerovac_zadaca_2
                     Elements.GetInstance().FirstObject.HandleRequest(request6);
                     break;
                 case 7:
-                    Elements.GetInstance().SaveMemento();
+                    storedMemento = new ChainMemory();
+                    storedMemento.Memento = Elements.GetInstance().SaveMemento();
                     break;
                 case 8:
                     if(Elements.GetInstance().MementoExists)
-                        Elements.GetInstance().RestoreMemento();
+                        Elements.GetInstance().RestoreMemento(storedMemento.Memento);
                     break;
             }
             ShowUserControls();
